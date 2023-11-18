@@ -5,9 +5,10 @@ import './App.css';
 
 function App() {
 const [movies , setMovies] = useState([]);
+const [isLoading , setIsLoading] = useState(false);
 async function getMovies (){
  try{
-
+    setIsLoading(true);
    const response = await fetch(process.env.REACT_APP_URL);
    const data = await response.json();
    const transformArray = data.results.map(movie =>{
@@ -20,6 +21,7 @@ async function getMovies (){
     }
   })
   setMovies(transformArray);
+  setIsLoading(false);
   }catch(err){
     console.log(err);
   }
@@ -33,7 +35,10 @@ async function getMovies (){
         <button onClick={getMovies}>Fetch Movies</button>
       </section>
       <section>
-        <MoviesList movies={movies} />
+       {
+
+       isLoading ?  <h1>Loading...</h1>: <MoviesList movies={movies} />
+       }
       </section>
     </React.Fragment>
   );
