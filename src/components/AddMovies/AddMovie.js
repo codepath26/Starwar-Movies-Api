@@ -5,8 +5,32 @@ function AddMovie() {
   const [title , setTitle] = useState('')
   const [dsc , setDsc] = useState('')
   const [date , setDate] = useState('')
-  const addMovie = ()=>{
-    console.log(title , dsc, date);
+  const addMovie =async (e)=>{
+    e.preventDefault();
+    const movie = {
+      title : title,
+      dsc : dsc,
+      date : date,
+    }
+    // console.log(title , dsc, date);
+    try{
+
+      const result = await fetch(`${process.env.REACT_APP_URL}//movies.json`,{
+        method : "POST",
+        body : JSON.stringify(movie),
+        headers : {
+          'Content-Type' : "application/json"
+        }
+      }); 
+      const data = await result.json();
+      console.log(data);
+      setTitle('')
+      setDsc('')
+      setDate('')
+    }catch(err){
+      console.log(err);
+    }
+
     
   }
   return (
