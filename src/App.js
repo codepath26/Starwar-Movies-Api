@@ -8,7 +8,7 @@ const [movies , setMovies] = useState([]);
 async function getMovies (){
  try{
 
-   const response = await fetch('https://swapi.dev/api/films/');
+   const response = await fetch(process.env.REACT_APP_URL);
    const data = await response.json();
    const transformArray = data.results.map(movie =>{
     return {
